@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nntimer</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #2c2c2c;
+            color: white;
+        }
+        #container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        #video-container {
+            border: 2px solid #444;
+            /* new size to prevent layout shift */
+            min-width: 960px; 
+            min-height: 540px;
+        }
+        #timer-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+        }
+        #timer {
+            font-size: 5em;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        #status {
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="video-container">
+            <!-- new size for hd video -->
+            <img id="video-feed" src="/video_feed" width="960" height="540">
+        </div>
+        <div id="timer-container">
+            <div id="timer">0.00</div>
+            <div id="status">Connecting...</div>
+        </div>
+    </div>
+    <script>
+        const timerDisplay = document.getElementById('timer');
+        const statusDisplay = document.getElementById('status');
+
+        async function getStatus() {
+            try {
+                const response = await fetch('/status');
+                if (!response.ok) {
+                    throw new Error(`http error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                timerDisplay.textContent = data.time;
+                statusDisplay.textContent = data.status;
+            } catch (error) {
+                console.error("could not fetch status:", error);
+                statusDisplay.textContent = "disconnected";
+            }
+        }
+
+        setInterval(getStatus, 100);
+    </script>
+</body>
+</html>

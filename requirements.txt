@@ -1,0 +1,13 @@
+opencv-python
+mediapipe
+torch
+torchvision
+fastapi
+python-multipart
+uvicorn
+websockets
+roboflow
+ultralytics
+onnx
+onnxruntime-gpu
+tqdm
