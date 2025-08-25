@@ -1,6 +1,7 @@
 # nntimer
 
 a smart, hands-free speedcube timer powered by computer vision.
+
 ![nntimer demo](media/demo.gif)   
 
 ---
